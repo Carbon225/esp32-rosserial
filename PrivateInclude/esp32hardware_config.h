@@ -1,0 +1,53 @@
+#ifndef _ROS_ESP32_HARDWARE_CONFIG_H_
+#define _ROS_ESP32_HARDWARE_CONFIG_H_
+
+#include "sdkconfig.h"
+
+
+// UART NUM
+#undef CONFIG_ROS_UART_NUM
+
+#if defined(CONFIG_ROS_UART_NUM_0)
+#define CONFIG_ROS_UART_NUM UART_NUM_0
+
+#elif defined(CONFIG_ROS_UART_NUM_1)
+#define CONFIG_ROS_UART_NUM UART_NUM_1
+
+#elif defined(CONFIG_ROS_UART_NUM_2)
+#define CONFIG_ROS_UART_NUM UART_NUM_2
+#else
+#error "Invalid UART number for ROS"
+#endif
+
+#define ROS_UART_NUM CONFIG_ROS_UART_NUM
+// !UART NUM
+
+
+// UART pins
+#if CONFIG_ROS_UART_GPIO_RX < 0
+#undef CONFIG_ROS_UART_GPIO_RX
+#define CONFIG_ROS_UART_GPIO_RX UART_PIN_NO_CHANGE
+#endif
+
+#if CONFIG_ROS_UART_GPIO_TX < 0
+#undef CONFIG_ROS_UART_GPIO_TX
+#define CONFIG_ROS_UART_GPIO_TX UART_PIN_NO_CHANGE
+#endif
+
+#define ROS_UART_RX CONFIG_ROS_UART_GPIO_RX
+#define ROS_UART_TX CONFIG_ROS_UART_GPIO_TX
+// !UART pins
+
+
+// UART baud
+#define ROS_UART_BAUD CONFIG_ROS_UART_BAUD
+// !UART baud
+
+
+// UART buf size
+#define ROS_UART_BUF_SIZE CONFIG_ROS_UART_BUF_SIZE
+// !UART buf size
+
+
+#endif // !_ROS_ESP32_HARDWARE_CONFIG_H_
+

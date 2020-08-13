@@ -1,0 +1,68 @@
+menu "ROS Serial"
+	choice ROS_UART_NUM
+		prompt "UART peripheral"
+		default ROS_UART_NUM_0
+		help
+			UART peripheral for ROS
+
+		config ROS_UART_NUM_0
+			bool "UART_NUM_0"
+		config ROS_UART_NUM_1
+			bool "UART_NUM_1"
+		config ROS_UART_NUM_2
+			bool "UART_NUM_2"
+	endchoice # ROS_UART_NUM
+
+	config ROS_UART_NUM
+		int
+		default 0 if ROS_UART_NUM_0
+		default 1 if ROS_UART_NUM_1
+		default 2 if ROS_UART_NUM_2
+
+	choice ROS_UART_BAUD
+        prompt "UART baud rate"
+        default ROS_UART_BAUD_115200B
+        help
+            ROS Serial baud rate
+
+        config ROS_UART_BAUD_115200B
+            bool "115200 baud"
+        config ROS_UART_BAUD_57600B
+            bool "57600 baud"
+        config ROS_UART_BAUD_OTHER
+            bool "Other baud rate"
+    endchoice
+
+    config ROS_UART_BAUD_OTHER_VAL
+        int "Other baud rate value" if ROS_UART_BAUD_OTHER
+        default 115200
+
+    config ROS_UART_BAUD
+        int
+        default 115200 if ROS_UART_BAUD_115200B
+        default 57600 if ROS_UART_BAUD_57600B
+        default ROS_UART_BAUD_OTHER_VAL if ROS_UART_BAUD_OTHER
+
+	config ROS_UART_GPIO_RX
+		int "UART RX GPIO"
+		range -1 34
+		default -1
+		help
+			GPIO number for UART RX pin (-1 for UART_PIN_NO_CHANGE)
+
+	config ROS_UART_GPIO_TX
+		int "UART TX GPIO"
+		range -1 34
+		default -1
+		help
+			GPIO number for UART TX pin (-1 for UART_PIN_NO_CHANGE)
+
+	config ROS_UART_BUF_SIZE
+		int "Buffer size"
+		range 256 16384
+		default 1024
+		help
+			UART RX/TX ring buffer size
+
+endmenu # "ROS Serial"
+
